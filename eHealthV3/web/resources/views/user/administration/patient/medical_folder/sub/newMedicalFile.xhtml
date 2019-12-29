@@ -1,0 +1,62 @@
+<ui:composition
+
+        xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui" xmlns:a="http://java.sun.com/jsf/html"
+
+>
+
+
+
+    <p:growl id="msgs" showDetail="true"/>
+    <p:panel>
+        <f:facet name="header">Ajouter un fichier medical</f:facet>
+        <p:panelGrid id="fileForm" columns="2">
+
+
+            <p:outputLabel for="date_Creataion" value="#{msg['date_Creataion']} :"/>
+            <p:calendar id="date_Creataion"
+                        value="#{medicalFileViewScopedController.newFicheMedical.dateCreation}"
+                        showOn="button"/>
+
+
+            <p:outputLabel for="medicalFileDetail" value="Détail"/>
+            <p:panel>
+                <p:textEditor id="medicalFileDetail" widgetVar="editor12"
+                              value="#{medicalFileViewScopedController.newFicheMedical.detail}"
+                              height="300" style="margin-bottom:10px"
+                              />
+                <h:panelGroup style="display:block; text-align:center">
+                    <p:commandButton style="font-size: small" value="Effacer" onclick="PF('editor12').clear();"
+                    />
+                </h:panelGroup>                        <p:dialog header="Content" widgetVar="dlg" showEffect="fade" hideEffect="fade">
+            </p:dialog>
+            </p:panel>
+
+
+            <p:outputLabel value="Attachement en PDF"/>
+            <p:fileUpload cancelLabel="Annuler" uploadLabel="Télécharger" label="Choisir"
+                          style="font-size:small"
+                          fileUploadListener="#{medicalFileViewScopedController.handleFileUpload}"
+                          mode="advanced" dragDropSupport="false"
+                          multiple="true" update="msgs" sizeLimit="16777215" fileLimit="3"
+                          allowTypes="/(\.|\/)(pdf)$/"/>
+
+
+        </p:panelGrid>
+        <h:panelGroup style="display:block; text-align:center">
+            <p:commandButton style="font-size: small" value="Ajouter"
+                             update=":updateDmForm:medicalFilelist msgs" styleClass="ui-priority-primary"
+                             action="#{medicalFileViewScopedController.createMedicalFile(medicalFolderViewScopedController.selectedDossierMedical)}"/>
+        </h:panelGroup>
+        <f:facet name="footer">
+            <h:panelGroup style="display:block; text-align:right">
+                <p:outputLabel
+                        value="Dossier medical n° : #{medicalFolderViewScopedController.selectedDossierMedical.idDossierMedical}"/>
+            </h:panelGroup>
+        </f:facet>
+    </p:panel>
+
+</ui:composition>

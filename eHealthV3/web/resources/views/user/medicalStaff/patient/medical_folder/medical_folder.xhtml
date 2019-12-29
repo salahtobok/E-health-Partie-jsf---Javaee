@@ -1,0 +1,24 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+
+
+    <h:form>
+        <ul class="breadcrumb">
+            <li class="breadcrumb-item"><p:commandLink update=":currentMedicalFolderFragment" value="Dossier"
+                                                       action="#{medicalFolderMedicalStaffController.setPage('/resources/views/user/medicalStaff/patient/medical_folder/master/folder')}"/>
+            </li>
+        </ul>
+    </h:form>
+    <!--content -->
+    <h:panelGroup id="currentMedicalFolderFragment">
+        <ui:include src="#{medicalFolderMedicalStaffController.page}.xhtml"/>
+    </h:panelGroup>
+    <!--content -->
+
+</ui:composition>

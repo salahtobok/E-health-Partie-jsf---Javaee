@@ -1,0 +1,33 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+    <!--new file -->
+
+
+
+    <h:form id="updateDmForm">
+        <p:dialog id="folderUpdatePanel" header="#{msg['medical_files']}"
+                  widgetVar="medical_folder_updater_dialog"
+                  modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="true"
+                  minimizable="true" maximizable="true">
+
+            <ui:include src="/resources/views/user/medicalStaff/patient/medical_folder/sub/newMedicalFile.xhtml"/>
+            <!--new file -->
+            <p:separator/>
+
+            <p:panel style="text-align:center;" rendered="#{not empty medicalFolderViewScopedController.selectedDossierMedical}">
+                <ui:include src="/resources/views/user/medicalStaff/patient/medical_folder/sub/medicalFilesList.xhtml"/>
+            </p:panel>
+        </p:dialog>
+    </h:form>
+    <!--update compte file -->
+
+
+</ui:composition>

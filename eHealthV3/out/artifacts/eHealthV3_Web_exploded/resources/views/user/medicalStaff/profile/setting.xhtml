@@ -1,0 +1,125 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+
+<h:form id="updateForm">
+
+        <p:growl id="growlUpdateTool" showDetail="true"/>
+
+
+            <p:panel style="text-align:center;"
+                     rendered="#{not empty userController.comptePersonneMedical.medecin}">
+
+                <h:panelGrid columns="1">
+                    <h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="lastname" value="#{msg['lastname']}"/>
+                            <p:outputLabel id="lastname" value="#{userController.comptePersonneMedical.medecin.nom}"/>
+
+                            <p:outputLabel for="firstname" value="#{msg['firstname']}"/>
+                            <p:outputLabel id="firstname"
+                                         value="#{userController.comptePersonneMedical.medecin.prenom}"/>
+
+                            <p:outputLabel for="insurance_number" value="#{msg['insurance_number']} :"/>
+                            <p:outputLabel id="insurance_number"
+                                         value="#{userController.comptePersonneMedical.medecin.numeroAssurance}"/>
+
+                            <p:outputLabel for="sex" value="#{msg['sex']} :"/>
+                            <p:outputLabel id="sex"
+                                           value="#{userController.comptePersonneMedical.medecin.sexe}"/>
+
+                            <p:outputLabel for="email" value="#{msg['email']} :"/>
+                            <p:inputText id="email" value="#{userController.comptePersonneMedical.medecin.email}"/>
+
+                            <p:outputLabel for="date_birth" value="#{msg['date_birth']} :"/>
+                            <p:calendar id="date_birth"
+                                        value="#{userController.comptePersonneMedical.medecin.dateNaissance}"
+                                        showOn="button"/>
+
+                            <p:outputLabel for="birthplace" value="#{msg['birthplace']} :"/>
+                            <p:outputLabel id="birthplace"
+                                         value="#{userController.comptePersonneMedical.medecin.lieuNaissance}"/>
+
+                            <p:outputLabel for="phone_number" value="#{msg['phone_number']} :"/>
+                            <p:inputNumber id="phone_number"
+                                           value="#{userController.comptePersonneMedical.medecin.numeroTelephone}"/>
+
+
+
+                        </h:panelGrid>
+                        <p:separator/>
+                        <h:panelGrid columns="2">
+
+
+                            <p:outputLabel for="zip_code" value="#{msg['zip_code']} :"/>
+                            <p:inputText id="zip_code"
+                                         value="#{userController.comptePersonneMedical.medecin.adresse.codePostal}"/>
+
+
+                            <p:outputLabel for="address_number" value="#{msg['address_number']} :"/>
+                            <p:inputNumber id="address_number"
+                                           value="#{userController.comptePersonneMedical.medecin.adresse.numero}"/>
+
+                            <p:outputLabel for="street" value="#{msg['street']} :"/>
+                            <p:inputText id="street"
+                                         value="#{userController.comptePersonneMedical.medecin.adresse.rue}"/>
+
+                            <p:outputLabel for="city" value="#{msg['city']} :"/>
+                            <p:inputText id="city"
+                                         value="#{userController.comptePersonneMedical.medecin.adresse.ville}"/>
+
+
+                        </h:panelGrid>
+
+
+                    </h:panelGrid>
+                    <p:separator/>
+
+
+                    <p:panelGrid>
+
+                        <h:panelGrid columns="2">
+                            <f:facet name="header">
+                                <p:outputLabel
+                                        style="font-size:30px ">#{msg['account_setting']}</p:outputLabel>
+                            </f:facet>
+                            <p:outputLabel for="login" value="#{msg['login']}"/>
+                            <p:outputLabel id="login"
+                                         value="#{userController.comptePersonneMedical.medecin.comptePersonneMedical.login}"/>
+
+                            <p:outputLabel for="password" value="#{msg['password']}"/>
+                            <p:inputText id="password"
+                                         value="#{userController.comptePersonneMedical.medecin.comptePersonneMedical.motDePasse}"/>
+
+                        </h:panelGrid>
+
+                    </p:panelGrid>
+
+                </h:panelGrid>
+
+
+                <f:facet name="footer">
+                    <h:panelGroup style="display:block; text-align:right">
+                        <p:commandButton
+                                icon="fa fa-refresh"
+                                update=":updateForm:growlUpdateTool "
+                                actionListener="#{userController.update}"
+                        />
+
+
+                    </h:panelGroup>
+
+                </f:facet>
+
+            </p:panel>
+        <!--update compte file -->
+    </h:form>
+
+</ui:composition>

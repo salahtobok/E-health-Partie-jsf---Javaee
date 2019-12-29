@@ -1,0 +1,52 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+    <h:form id="createForm">
+        <p:growl id="growlCreateTool" showDetail="true"/>
+
+        <p:dialog header="#{msg['create_questionnaire']}" widgetVar="questionnaire_creator_dialog" modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="false">
+
+            <p:panel id="questionnaireDialog" style="text-align:center;">
+                <h:panelGrid columns="2">
+
+                    <p:outputLabel for="duration" value="#{msg['duration']}" />
+                    <p:selectOneMenu id="duration"
+                                     value="#{questionnaireMedicalStaffViewScopedController.newQuestionnaire.periode}">
+                        <f:selectItem itemLabel="POST" itemValue="POST"/>
+                        <f:selectItem itemLabel="PRES" itemValue="PRES"/>
+                    </p:selectOneMenu>
+
+
+                        <p:outputLabel for="operation" value="#{msg['operation']}" />
+                        <p:selectOneMenu id="operation" value="#{questionnaireMedicalStaffViewScopedController.operationSelectedId}" lazy="true" style="width:125px">
+                            <f:selectItem itemLabel="#{msg['operation']}" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{questionnaireMedicalStaffViewScopedController.operations}" var="operation"
+                                           itemLabel="Type : #{operation.type} Période : #{operation.periode}  Date : #{operation.keyOperation.dateOperation}" itemValue="#{operation.idOperation}"/>
+                        </p:selectOneMenu>
+
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    <h:panelGroup style="display:block; text-align:right">
+                        <p:commandButton
+                                icon="fa fa-check"
+                                update="growlCreateTool :questionnaireListForm"
+                                actionListener="#{questionnaireMedicalStaffViewScopedController.create}"
+                        />
+                    </h:panelGroup>
+
+                </f:facet>
+
+            </p:panel>
+
+        </p:dialog>
+
+
+    </h:form>
+</ui:composition>

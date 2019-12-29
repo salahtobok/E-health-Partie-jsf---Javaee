@@ -1,0 +1,88 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="patientListForm">
+
+
+        <h:panelGroup id="patientList" rendered="#{patientRequestScopedController.patients.size() !=0}">
+
+
+            <p:dataTable var="patient" value="#{patientRequestScopedController.patients}"
+                         widgetVar="patientsTable"
+                         emptyMessage="#{msg['no_patient_exist']}"
+                         filteredValue="#{patientRequestScopedController.filteredPatients}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="#{msg['Search_all_fields']}"/>
+                        <p:inputText id="globalFilter" onkeyup="PF('patientsTable').filter()" style="width:150px"
+                                     placeholder="#{msg['Enter_keyword']}"/>
+                    </p:outputPanel>
+                </f:facet>
+
+
+                <p:column filterBy="#{patient.nom}" headerText="#{msg['lastname']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{patient.nom}"/>
+                </p:column>
+
+
+                <p:column filterBy="#{patient.prenom}" headerText="#{msg['firstname']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{patient.prenom}"/>
+                </p:column>
+
+                <p:column filterBy="#{patient.numeroAssurance}" headerText="#{msg['insurance_number']}"
+                          filterMatchMode="exact">
+                    <h:outputText value="#{patient.numeroAssurance}"/>
+                </p:column>
+
+                <p:column filterBy="#{patient.email}" headerText="#{msg['email']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{patient.email}"/>
+                </p:column>
+
+
+
+
+                <p:column filterBy="#{patient.compte.etatCompte}" headerText="#{msg['account_state']}" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('patientsTable').filter()" >
+                            <f:selectItem itemLabel="NONACTIF" itemValue="NONACTIF"/>
+                            <f:selectItem itemLabel="ACTIF" itemValue="ACTIF"/>
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{patient.compte.etatCompte}" />
+                </p:column>
+
+
+
+                <p:column width="3%">
+                    <p:commandButton update=":updateCompteForm:compteUpdatePanel"
+                                     style="font-size: x-small" icon="fa fa-refresh"
+                                     title="#{msg['update_medical_compte']}"
+                                     oncomplete="PF('medical_compte_updater_dialog').show();">
+                        <f:setPropertyActionListener value="#{patient}"
+                                                     target="#{patientViewScopedController.selectedPatient}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:panelGroup>
+
+    </h:form>
+
+
+</ui:composition>

@@ -1,0 +1,46 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="sendConsigneForm">
+
+        <p:growl id="growlUpdateTool" showDetail="true"/>
+
+        <p:dialog  id="consigneSendPanel" header="#{msg['send_this_consigne']}" widgetVar="consigne_send_dialog"
+                  modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="false">
+            <p:panel style="text-align:center;"
+                     rendered="#{not empty consigneMedicalStaffViewScopedController.selectedConsigne}">
+
+                <h:panelGrid columns="1">
+                    <p:outputLabel for="operation" value="#{msg['operation']}" />
+                    <p:selectOneMenu id="operation" value="#{consigneMedicalStaffViewScopedController.operationSelectedId}" lazy="true" >
+                        <f:selectItem itemLabel="#{msg['operation']}" itemValue="" noSelectionOption="true" />
+                        <f:selectItems value="#{consigneMedicalStaffViewScopedController.operations}" var="operation"
+                                       itemLabel="Type : #{operation.type} Période : #{operation.periode}  Date : #{operation.keyOperation.dateOperation}" itemValue="#{operation.idOperation}"/>
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+                <f:facet name="footer">
+                    <h:panelGroup style="display:block; text-align:right">
+                        <p:commandButton
+                                icon="fa fa-location-arrow"
+                                update=":sendConsigneForm:growlUpdateTool :consigneListForm"
+                                actionListener="#{consigneMedicalStaffViewScopedController.send}"
+                        />
+                    </h:panelGroup>
+
+                </f:facet>
+
+            </p:panel>
+        </p:dialog>
+        <!--update compte file -->
+    </h:form>
+
+
+</ui:composition>

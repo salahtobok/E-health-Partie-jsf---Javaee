@@ -1,0 +1,59 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+
+    <!--new medical file -->
+    <ui:include src="/resources/views/user/administration/infrastructure/service/sub/newService.xhtml"/>
+
+    <!--new medical file -->
+
+    <!--accounts generator -->
+    <ui:include src="/resources/views/user/administration/infrastructure/service/sub/serviceList.xhtml"/>
+
+    <!--accounts generator -->
+
+
+    <!--update service -->
+    <ui:include src="/resources/views/user/administration/infrastructure/service/sub/updateForm.xhtml"/>
+
+    <!--update service -->
+
+
+    <!--update compte -->
+    <ui:include src="/resources/views/user/administration/infrastructure/service/sub/medicalStaffList.xhtml"/>
+
+    <!--update compte -->
+    <h:panelGroup id="no_service_existAlert"
+                  rendered="#{patientRequestScopedController.patients.size() ==0}">
+        <div class="alert alert-warning">
+            #{msg['no_patient_exist']}
+        </div>
+    </h:panelGroup>
+
+    <h:form id="tool">
+
+        <!--toolbar -->
+
+        <p:toolbar>
+            <f:facet name="left">
+                <p:commandButton update=":createForm:serviceDialog" icon="fa fa-plus" value="#{msg['create_service']}"
+                                 onclick="PF('service_creator_dialog').show()"/>
+
+                <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+            </span>
+
+            </f:facet>
+
+        </p:toolbar>
+
+    </h:form>
+
+</ui:composition>

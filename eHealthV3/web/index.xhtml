@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+>
+<h:head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!--<f:facet name="last">-->
+        <!--<link type="text/css" rel="stylesheet" href="/public/assets/css/style.css"></link>-->
+        <!--<link type="text/css" rel="stylesheet" href="/public/assets/css/bootstrap.min.css"></link>-->
+    <!--</f:facet>-->
+</h:head>
+
+<h:body>
+
+
+    <h:outputText value="#{msg['greeting']}" />
+
+    <h:outputLabel value="Multiple:"/>
+
+    <p:button value="Bookmark" icon="ui-icon-star">
+        <f:param name="productId" value="10" />
+    </p:button>
+
+
+
+    <p:commandButton value="List de voeux" icon="fa-align-left"
+                     onclick="PF('dlg3').show();"/>
+    <p:dialog header="Trier votre choix" widgetVar="dlg3" showEffect="explode" hideEffect="bounce" height="300">
+
+    </p:dialog>
+
+</h:body>
+</html>

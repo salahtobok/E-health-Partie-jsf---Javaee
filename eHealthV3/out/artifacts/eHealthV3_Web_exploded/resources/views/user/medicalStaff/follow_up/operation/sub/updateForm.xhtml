@@ -1,0 +1,56 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="updateOperationForm">
+
+        <p:growl id="growlUpdateTool" showDetail="true"/>
+
+        <p:dialog  id="operationUpdatePanel" header="#{msg['update_medical_compte']}" widgetVar="operation_updater_dialog"
+                  modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="false">
+            <p:panel style="text-align:center;"
+                     rendered="#{not empty operationMedicalStaffViewScopedController.selectedOperation}">
+
+                <h:panelGrid columns="2">
+
+                    <p:outputLabel for="type" value="#{msg['type']}"/>
+                    <p:inputTextarea id="type" value="#{operationMedicalStaffViewScopedController.selectedOperation.type}"/>
+
+
+                    <p:outputLabel for="duration" value="#{msg['duration']} :"/>
+                    <p:selectOneMenu id="duration" value="#{operationMedicalStaffViewScopedController.selectedOperation.periode}" >
+                        <f:selectItem itemLabel="POST" itemValue="POST" />
+                        <f:selectItem itemLabel="PRES" itemValue="PRES" />
+                    </p:selectOneMenu>
+
+                </h:panelGrid>
+                <f:facet name="footer">
+                    <h:panelGroup style="display:block; text-align:right">
+                        <p:commandButton
+                                icon="fa fa-refresh"
+                                update=":updateOperationForm:growlUpdateTool :operationListForm"
+                                actionListener="#{operationMedicalStaffViewScopedController.update}"
+                        />
+
+                        <p:commandButton
+                                icon="ui-icon ui-icon-close"
+                                update=":updateOperationForm:growlUpdateTool :operationListForm"
+                                actionListener="#{operationMedicalStaffViewScopedController.delete}"
+                        />
+                    </h:panelGroup>
+
+                </f:facet>
+
+            </p:panel>
+        </p:dialog>
+        <!--update compte file -->
+    </h:form>
+
+
+</ui:composition>

@@ -1,0 +1,68 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="serviceListForm">
+
+
+
+
+            <p:dataTable var="service" value="#{serviceRequestScopedController.services}"
+                         widgetVar="serviceTable"
+                         emptyMessage="#{msg['no_service_exist']}"
+                         filteredValue="#{serviceRequestScopedController.filteredServices}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="#{msg['Search_all_fields']}"/>
+                        <p:inputText id="globalFilter" onkeyup="PF('serviceTable').filter()" style="width:150px"
+                                     placeholder="#{msg['Enter_keyword']}"/>
+                    </p:outputPanel>
+                </f:facet>
+
+
+                <p:column filterBy="#{service.nom}" headerText="#{msg['service_name']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{service.nom}"/>
+                </p:column>
+
+
+
+                <p:column headerText="#{msg['medicalstaff']}" width="10%">
+                    <p:commandButton update=":medicalStaffForm:medicalStaffPanel"
+                                     style="font-size: x-small" icon="fa fa-user-md"
+                                     title="#{msg['medicalstaff']}"
+                                     oncomplete="PF('medical_staff_dialog').show();">
+                        <f:setPropertyActionListener value="#{service.lesMedecins}"
+                                                     target="#{serviceRequestScopedController.selectedMedicalStaff}"/>
+                    </p:commandButton>
+                </p:column>
+
+
+                <p:column width="3%">
+                    <p:commandButton headerText="#{msg['update_medical_compte']}" update=":updateServiceForm:serviceUpdatePanel"
+                                     style="font-size: x-small" icon="fa fa-refresh"
+                                     title="#{msg['update_service']}"
+                                     oncomplete="PF('service_updater_dialog').show();">
+                        <f:setPropertyActionListener value="#{service}"
+                                                     target="#{serviceViewScopedController.selectedService}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+
+    </h:form>
+
+
+</ui:composition>

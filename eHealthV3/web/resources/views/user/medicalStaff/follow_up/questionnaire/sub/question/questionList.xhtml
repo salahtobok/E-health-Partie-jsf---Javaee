@@ -1,0 +1,62 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="questionListForm">
+
+
+        <h:panelGroup id="questionList">
+
+
+            <p:dataTable var="question" value="#{questionMedicalStaffRequestScopedController.questions}"
+                         widgetVar="questionsTable"
+                         emptyMessage="#{msg['no_question_exist']}"
+                         filteredValue="#{questionMedicalStaffRequestScopedController.filteredQuestions}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+
+                <p:column width="90%" filterBy="#{question.contenu}" headerText="#{msg['content']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{question.contenu}"/>
+                </p:column>
+
+
+
+                <p:column width="3%" >
+                    <p:commandButton update=":sendQuestionForm:questionSendPanel"
+                                     style="font-size: x-small" icon="fa fa-location-arrow"
+                                     title="#{msg['send_this_consigne']}"
+                                     oncomplete="PF('question_send_dialog').show();">
+                        <f:setPropertyActionListener value="#{question}"
+                                                     target="#{questionMedicalStaffViewScopedController.selectedQuestion}"/>
+                    </p:commandButton>
+                </p:column>
+
+
+                <p:column width="3%" >
+                    <p:commandButton rendered="#{question.questionnaire.operation.medecin.idMedecin  == userController.comptePersonneMedical.medecin.idMedecin}" update=":updateQuestionForm:questionUpdatePanel"
+                                     style="font-size: x-small" icon="fa fa-refresh"
+                                     title="#{msg['update_medical_compte']}"
+                                     oncomplete="PF('question_updater_dialog').show();">
+                        <f:setPropertyActionListener value="#{question}"
+                                                     target="#{questionMedicalStaffViewScopedController.selectedQuestion}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:panelGroup>
+
+
+    </h:form>
+
+
+</ui:composition>

@@ -1,0 +1,151 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="updateForm">
+
+        <p:growl id="growlUpdateTool" showDetail="true"/>
+
+        <p:dialog id="UpdatePanel" header="#{msg['update_medical_compte']}" widgetVar="medical_compte_updater_dialog"
+                  modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="false">
+            <p:panel style="text-align:center;"
+                     rendered="#{not empty medicalStaffViewScopedController.selectedMedecin}">
+
+                <h:panelGrid columns="1">
+                    <h:panelGrid>
+                        <h:panelGrid columns="2">
+                            <p:outputLabel for="lastname" value="#{msg['lastname']}"/>
+                            <p:inputText id="lastname" value="#{medicalStaffViewScopedController.selectedMedecin.nom}"/>
+
+                            <p:outputLabel for="firstname" value="#{msg['firstname']}"/>
+                            <p:inputText id="firstname"
+                                         value="#{medicalStaffViewScopedController.selectedMedecin.prenom}"/>
+
+                            <p:outputLabel for="insurance_number" value="#{msg['insurance_number']} :"/>
+                            <p:inputText id="insurance_number"
+                                         value="#{medicalStaffViewScopedController.selectedMedecin.numeroAssurance}"/>
+
+                            <p:outputLabel for="sex" value="#{msg['sex']} :"/>
+                            <p:selectOneMenu id="sex" value="#{medicalStaffViewScopedController.selectedMedecin.sexe}">
+                                <f:selectItem itemLabel="FEMME" itemValue="FEMME"/>
+                                <f:selectItem itemLabel="HOMME" itemValue="HOMME"/>
+                            </p:selectOneMenu>
+
+                            <p:outputLabel for="email" value="#{msg['email']} :"/>
+                            <p:inputText id="email" value="#{medicalStaffViewScopedController.selectedMedecin.email}"/>
+
+                            <p:outputLabel for="date_birth" value="#{msg['date_birth']} :"/>
+                            <p:calendar id="date_birth"
+                                        value="#{medicalStaffViewScopedController.selectedMedecin.dateNaissance}"
+                                        showOn="button"/>
+
+                            <p:outputLabel for="birthplace" value="#{msg['birthplace']} :"/>
+                            <p:inputText id="birthplace"
+                                         value="#{medicalStaffViewScopedController.selectedMedecin.lieuNaissance}"/>
+
+                            <p:outputLabel for="phone_number" value="#{msg['phone_number']} :"/>
+                            <p:inputText id="phone_number"
+                                           value="#{medicalStaffViewScopedController.selectedMedecin.numeroTelephone}"/>
+
+
+                            <p:outputLabel for="rank" value="#{msg['rank']} :"/>
+                            <p:inputText id="rank" value="#{medicalStaffViewScopedController.selectedMedecin.grade}"/>
+
+
+                            <p:outputLabel for="service" value="#{msg['service']}"/>
+                            <p:selectOneMenu id="service"
+                                             value="#{medicalStaffViewScopedController.selectedServiceName}" lazy="true"
+                                             style="width:125px">
+                                <f:selectItem itemLabel="#{msg['service']}" itemValue="" noSelectionOption="true"/>
+                                <f:selectItems value="#{medicalStaffViewScopedController.serviceList}" var="service"
+                                               itemLabel="#{service.nom}" itemValue="#{service.nom}"/>
+                            </p:selectOneMenu>
+
+
+                        </h:panelGrid>
+                        <p:separator/>
+                        <h:panelGrid columns="2">
+
+
+                            <p:outputLabel for="zip_code" value="#{msg['zip_code']} :"/>
+                            <p:inputText id="zip_code"
+                                         value="#{medicalStaffViewScopedController.selectedMedecin.adresse.codePostal}"/>
+
+
+                            <p:outputLabel for="address_number" value="#{msg['address_number']} :"/>
+                            <p:inputNumber id="address_number"
+                                           value="#{medicalStaffViewScopedController.selectedMedecin.adresse.numero}"/>
+
+                            <p:outputLabel for="street" value="#{msg['street']} :"/>
+                            <p:inputText id="street"
+                                         value="#{medicalStaffViewScopedController.selectedMedecin.adresse.rue}"/>
+
+                            <p:outputLabel for="city" value="#{msg['city']} :"/>
+                            <p:inputText id="city"
+                                         value="#{medicalStaffViewScopedController.selectedMedecin.adresse.ville}"/>
+
+
+                        </h:panelGrid>
+
+
+                    </h:panelGrid>
+
+
+                    <p:panelGrid>
+
+                        <h:panelGrid columns="2">
+                            <f:facet name="header">
+                                <p:outputLabel
+                                        style="font-size:30px ">#{msg['account_setting']}</p:outputLabel>                            </f:facet>
+                            <p:outputLabel for="login" value="#{msg['login']}"/>
+                            <p:inputText id="login"
+                                         value="#{medicalStaffViewScopedController.selectedMedecin.comptePersonneMedical.login}"/>
+
+                            <p:outputLabel for="password" value="#{msg['password']}"/>
+                            <p:inputText id="password"
+                                         value="#{medicalStaffViewScopedController.selectedMedecin.comptePersonneMedical.motDePasse}"/>
+
+
+                            <p:outputLabel for="account_state" value="#{msg['account_state']} :"/>
+                            <p:selectOneMenu id="account_state"
+                                             value="#{medicalStaffViewScopedController.selectedMedecin.comptePersonneMedical.etatCompte}">
+                                <f:selectItem itemLabel="NONACTIF" itemValue="NONACTIF"/>
+                                <f:selectItem itemLabel="ACTIF" itemValue="ACTIF"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+uu
+                    </p:panelGrid>
+
+                </h:panelGrid>
+
+
+                <f:facet name="footer">
+                    <h:panelGroup style="display:block; text-align:right">
+                        <p:commandButton
+                                icon="fa fa-refresh"
+                                update=":updateForm:growlUpdateTool :medicalStaffListForm "
+                                actionListener="#{medicalStaffViewScopedController.update}"
+                        />
+
+                        <p:commandButton
+                                icon="ui-icon ui-icon-close"
+                                update=":updateForm:growlUpdateTool :medicalStaffListForm "
+                                actionListener="#{medicalStaffViewScopedController.delete}"
+                        />
+                    </h:panelGroup>
+
+                </f:facet>
+
+            </p:panel>
+        </p:dialog>
+        <!--update compte file -->
+    </h:form>
+
+
+</ui:composition>

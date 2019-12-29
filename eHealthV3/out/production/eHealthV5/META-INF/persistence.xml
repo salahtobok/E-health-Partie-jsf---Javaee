@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+
+    <persistence-unit name="NewPersistenceUnit" transaction-type="JTA">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+        <jta-data-source>jdbc/ehealth</jta-data-source>
+
+        <class>Entities.Alerte</class>
+        <class>Entities.ComptePersonneMedical</class>
+        <class>Entities.ComptePatient</class>
+        <class>Entities.CompteAdministration</class>
+        <class>Entities.Consigne</class>
+        <class>Entities.Consultation</class>
+        <class>Entities.DossierMedical</class>
+        <class>Entities.FicheMedical</class>
+        <class>Entities.Medecin</class>
+        <class>Entities.Message</class>
+        <class>Entities.Operation</class>
+        <class>Entities.Patient</class>
+        <class>Entities.Question</class>
+        <class>Entities.Questionnaire</class>
+        <class>Entities.RendezVous</class>
+        <class>Entities.Service</class>
+        <class>Entities.ServiceUrgence</class>
+        <class>Entities.Embeddable.Adresse</class>
+        <class>Entities.Embeddable.KeyOperation</class>
+        <class>Entities.Embeddable.KeyConsultation</class>
+        <class>Entities.Rapport</class>
+        <class>Entities.Embeddable.KeyMessage</class>
+        <class>Entities.Embeddable.KeyRendezVous</class>
+        <class>Entities.Embeddable.KeyAlerte</class>
+
+        <properties>
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.transaction.jta.platform"
+                      value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>
+        </properties>
+    </persistence-unit>
+</persistence>

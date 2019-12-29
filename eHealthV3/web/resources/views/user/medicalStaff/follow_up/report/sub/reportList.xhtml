@@ -1,0 +1,78 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="reportListForm">
+
+
+        <h:panelGroup id="reportList">
+
+
+            <p:dataTable var="report" value="#{reportMedicalStaffRequestScopedController.rapports}"
+                         widgetVar="operationsTable"
+                         emptyMessage="#{msg['no_report_exist']}"
+                         filteredValue="#{reportMedicalStaffRequestScopedController.filteredRapports}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+
+                <p:column width="90%" filterBy="#{report.dateRapport}" headerText="#{msg['creation_date']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{report.dateRapport}"/>
+                </p:column>
+
+
+
+                <p:column width="90%" filterBy="#{report.type}" headerText="#{msg['type']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{report.type}"/>
+                </p:column>
+
+
+
+                <p:column width="90%" filterBy="#{report.operation.patient.numeroAssurance}" headerText="#{msg['operation']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="NA : #{report.operation.patient.numeroAssurance } Nom : #{report.operation.patient.nom} Prénom : #{report.operation.patient.prenom}"/>
+                </p:column>
+
+
+
+                <p:column width="9%" >
+
+
+                <p:commandButton style="font-size: x-small" ajax="false" icon="fa fa-fw fa-download">
+                    <p:fileDownload value="#{reportMedicalStaffViewScopedController.getAttachment(
+                            report.operation.patient.numeroAssurance,
+                            report.dateRapport,
+                            report.attachement
+                            )}" />
+                </p:commandButton>
+                </p:column>
+
+
+                <p:column width="9%" >
+                    <p:commandButton update=":updateReportForm:reportUpdatePanel"
+                                     style="font-size: x-small" icon="fa fa-refresh"
+                                     title="#{msg['update_medical_compte']}"
+                                     oncomplete="PF('report_updater_dialog').show();">
+                        <f:setPropertyActionListener value="#{report}"
+                                                     target="#{reportMedicalStaffViewScopedController.selectedRapport}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:panelGroup>
+
+
+    </h:form>
+
+
+</ui:composition>

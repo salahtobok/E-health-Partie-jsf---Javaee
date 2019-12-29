@@ -1,0 +1,21 @@
+<ui:fragment
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+            <h:form>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item"><p:commandLink update=":currentMedicalAccountFragment" value="#{msg['reports']}"
+                                                           action="#{reportMedicalStaffController.setPage('/resources/views/user/medicalStaff/follow_up/report/master/report')}"/>
+                </li>
+            </ul>
+            </h:form>
+    <!--content -->
+    <h:panelGroup id="currentMedicalAccountFragment">
+        <ui:include src="#{reportMedicalStaffController.page}.xhtml"/>
+    </h:panelGroup>
+    <!--content -->
+</ui:fragment>

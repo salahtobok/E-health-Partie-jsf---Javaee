@@ -1,0 +1,70 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="operationListForm">
+
+
+        <h:panelGroup id="operationList">
+
+
+            <p:dataTable var="operation" value="#{operationMedicalStaffRequestScopedController.operations}"
+                         widgetVar="operationsTable"
+                         emptyMessage="#{msg['no_operation_exist']}"
+                         filteredValue="#{operationMedicalStaffRequestScopedController.filteredOperations}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+
+                <p:column  filterBy="#{operation.type}" headerText="#{msg['type']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{operation.type}"/>
+                </p:column>
+
+
+                <p:column filterBy="#{operation.patient.numeroAssurance}" headerText="#{msg['operation']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="NA : #{operation.patient.numeroAssurance } Nom : #{operation.patient.nom} Prénom : #{operation.patient.prenom}"/>
+                </p:column>
+
+
+
+
+                <p:column width="7%" filterBy="#{operation.periode}" headerText="#{msg['duration']}" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('operationsTable').filter()" >
+                            <f:selectItem itemLabel="PRES" itemValue="PRES"/>
+                            <f:selectItem itemLabel="POST" itemValue="POST"/>
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{operation.periode}"/>
+                </p:column>
+
+
+
+                <p:column width="3%" >
+                    <p:commandButton update=":updateOperationForm:operationUpdatePanel"
+                                     style="font-size: x-small" icon="fa fa-refresh"
+                                     title="#{msg['update_medical_compte']}"
+                                     oncomplete="PF('operation_updater_dialog').show();">
+                        <f:setPropertyActionListener value="#{operation}"
+                                                     target="#{operationMedicalStaffViewScopedController.selectedOperation}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:panelGroup>
+
+
+    </h:form>
+
+
+</ui:composition>

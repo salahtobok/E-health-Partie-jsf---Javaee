@@ -1,0 +1,40 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+    <h:form id="createForm">
+        <p:growl id="growlCreateTool" showDetail="true"/>
+
+        <p:dialog  header="#{msg['create_question']}" widgetVar="question_creator_dialog" modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="false">
+
+                <p:panel id="questionDialog"  style="text-align:center;">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="content" value="#{msg['content']}"/>
+                        <p:inputTextarea id="content" value="#{questionMedicalStaffViewScopedController.newQuestion.contenu}"/>
+
+
+                    </h:panelGrid>
+
+                    <f:facet name="footer">
+                        <h:panelGroup style="display:block; text-align:right">
+                            <p:commandButton
+                                    icon="fa fa-check"
+                                    update="growlCreateTool :questionListForm"
+                                    actionListener="#{questionMedicalStaffViewScopedController.create}"
+                            />
+                        </h:panelGroup>
+
+                    </f:facet>
+
+                </p:panel>
+
+        </p:dialog>
+
+
+    </h:form>
+</ui:composition>

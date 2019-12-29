@@ -1,0 +1,269 @@
+/eHealthV3_war_exploded/index.xhtml
+        <!--<h:outputLabel value="Size of patient list is :#{patientController.patients.get(0).nom}"></h:outputLabel>-->
+//        System.out.println("patient list size " +patients.size());
+//        System.out.println("patient list size " +patients.get(0).getNom());
+#{msg['create_medical_compte']}
+
+
+
+
+
+
+
+
+        <h:panelGroup id="patientList" rendered="#{patientController.patients.size() !=0}">
+
+        <p:dataGrid var="patient" value="#{patientController.patients}" columns="3" layout="grid"
+                    rows="12" paginator="true" id="patients"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="6,12,16">
+
+            <f:facet name="header">
+                List de patients
+            </f:facet>
+
+            <p:panel header="#{patient.prenom  + ' ' + patient.nom}" style="text-align:center">
+                <h:panelGrid columns="2" style="width:100%">
+
+
+                    <p:outputLabel for="lastname" value="#{msg['lastname']}" />
+                    <p:outputLabel id="lastname" value="#{patient.nom}"/>
+
+                    <p:outputLabel for="firstname" value="#{msg['firstname']}" />
+                    <p:outputLabel id="firstname" value="#{patient.prenom}"/>
+
+                    <p:outputLabel for="insurance_number" value="#{msg['insurance_number']}" />
+                    <p:outputLabel id="insurance_number" value="#{patient.numeroAssurance}"/>
+
+
+                    <p:outputLabel for="email" value="#{msg['email']}" />
+                    <p:outputLabel id="email" value="#{patient.email}"/>
+
+
+
+                </h:panelGrid>
+            </p:panel>
+
+        </p:dataGrid>
+        </h:panelGroup>
+
+
+
+
+
+
+
+
+
+
+
+            <h:form>
+                <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="active">
+                            <a href="#"><i class="fa fa-wheelchair fa-fw"></i>#{msg['patient']}<span
+                                    class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <p:commandLink update=":currentFragment" value="#{msg['medical_folder']}"
+                                                   action="#{patientLayoutController.setPage('/resources/views/user/medicalStaff/patient/medical_folder/medical_folder')}"/>
+                                </li>
+                                <li>
+                                    <p:commandLink update=":currentFragment" value="#{msg['medical_account']}"
+                                                   action="#{patientLayoutController.setPage('/resources/views/user/medicalStaff/patient/medical_account/medical_account')}"/>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            </h:form>
+
+
+
+
+    <h:form id="medicalFileTool">
+
+        <!--toolbar -->
+
+        <p:toolbar>
+            <f:facet name="left">
+                <!--<p:commandButton type="button" value="New" icon="ui-icon-document" />-->
+
+
+                <!--<p:commandButton update=":createMfForm:fileUploadPanel" icon="fa fa-plus"-->
+                                 <!--value="#{msg['create_medical_compte']}"-->
+                                 <!--onclick="PF('medical_file_creator_dialog').show()"/>-->
+
+                <span class="ui-separator">
+                <span class="ui-icon ui-icon-grip-dotted-vertical"/>
+            </span>
+
+            </f:facet>
+
+        </p:toolbar>
+
+    </h:form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <p:dataTable var="service" value="#{serviceRequestScopedController.services}"
+                         widgetVar="servicesTable"
+                         emptyMessage="#{msg['no_service_exist']}"
+                         filteredValue="#{serviceRequestScopedController.filteredServices}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="#{msg['Search_all_fields']}"/>
+                        <p:inputText id="globalFilter3" onkeyup="PF('servicesTable').filter()" style="width:150px"
+                                     placeholder="#{msg['Enter_keyword']}"/>
+                    </p:outputPanel>
+                </f:facet>
+
+
+                <p:column filterBy="#{service.nom}" headerText="teztze"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{service.nom}"/>
+                </p:column>
+
+                <p:column filterBy="#{service.nom}" headerText="Id" footerText="contains" filterMatchMode="contains">
+                    <h:outputText value="#{service.nom}" />
+                </p:column>
+                <p:column>
+                    <p:commandButton update=":medicalStaffForm:medicalStaffPanel"
+                                     style="font-size: x-small" icon="fa fa-refresh"
+                                     title="#{msg['medicalstaff']}"
+                                     oncomplete="PF('medical_staff_dialog').show();">
+                        <f:setPropertyActionListener value="#{service.lesMedecins}"
+                                                     target="#{serviceRequestScopedController.selectedMedicalStaff}"/>
+                    </p:commandButton>
+                </p:column>
+
+
+                <p:column>
+                    <p:commandButton update=":updateServiceForm:serviceUpdatePanel"
+                                     style="font-size: x-small" icon="fa fa-refresh"
+                                     title="#{msg['update_service']}"
+                                     oncomplete="PF('service_updater_dialog').show();">
+                        <f:setPropertyActionListener value="#{service}"
+                                                     target="#{serviceViewScopedController.selectedService}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+
+                        <p:autoComplete id="service" dropdown="true" value="#{medicalStaffViewScopedController.newMedecin.service}" completeMethod="#{medicalStaffViewScopedController.completeText}" converter="serviceConverter" />
+
+
+                        <p:outputLabel value="#{msg['service']}" for="service" />
+                        <p:autoComplete id="service" dropdown="true" value="#{medicalStaffViewScopedController.newMedecin.service}" completeMethod="#{medicalStaffViewScopedController.suggestionsServiceName}" converter="serviceConverter" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    public Service findByField(Object nom) {
+//        Service service=null;
+//
+//        try {
+//
+//
+//            System.out.println("service_name " + nom);
+//
+//
+//            Query query =
+//                    entityManager.createQuery("SELECT service FROM Service service where service.nom = :key");
+//
+//
+//            query.setParameter("key", nom);
+//
+//            service = (Service) query.getSingleResult();
+//
+//
+//            return service;
+//        } catch (NoResultException noresult) {
+//            // if there is no result
+//        } catch (NonUniqueResultException notUnique) {
+//            // if more than one result
+//        }
+//        return service;
+//    }

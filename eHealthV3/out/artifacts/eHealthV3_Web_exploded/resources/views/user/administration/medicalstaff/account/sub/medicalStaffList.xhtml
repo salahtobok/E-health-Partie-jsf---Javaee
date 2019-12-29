@@ -1,0 +1,76 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="medicalStaffListForm">
+
+
+
+
+            <p:dataTable var="medicalStaff" value="#{medicalStaffRequestScopedController.medecins}"
+                         widgetVar="patientsTable"
+                         emptyMessage="#{msg['no_patient_exist']}"
+                         filteredValue="#{medicalStaffRequestScopedController.filteredMedecins}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+
+                <f:facet name="header">
+                    <p:outputPanel>
+                        <h:outputText value="#{msg['Search_all_fields']}"/>
+                        <p:inputText id="globalFilter" onkeyup="PF('patientsTable').filter()" style="width:150px"
+                                     placeholder="#{msg['Enter_keyword']}"/>
+                    </p:outputPanel>
+                </f:facet>
+
+
+                <p:column filterBy="#{medicalStaff.nom}" headerText="#{msg['lastname']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{medicalStaff.nom}"/>
+                </p:column>
+
+
+                <p:column filterBy="#{medicalStaff.prenom}" headerText="#{msg['firstname']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{medicalStaff.prenom}"/>
+                </p:column>
+
+                <p:column filterBy="#{medicalStaff.numeroAssurance}" headerText="#{msg['insurance_number']}"
+                          filterMatchMode="exact">
+                    <h:outputText value="#{medicalStaff.numeroAssurance}"/>
+                </p:column>
+
+                <p:column filterBy="#{medicalStaff.email}" headerText="#{msg['email']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{medicalStaff.email}"/>
+                </p:column>
+
+                <p:column filterBy="#{medicalStaff.service}" headerText="#{msg['service']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{medicalStaff.service}"/>
+                </p:column>
+
+                <p:column width="3%">
+                    <p:commandButton update=":updateForm:UpdatePanel"
+                                     style="font-size: x-small" icon="fa fa-refresh"
+                                     title="#{msg['update_medical_compte']}"
+                                     oncomplete="PF('medical_compte_updater_dialog').show();">
+                        <f:setPropertyActionListener value="#{medicalStaff}"
+                                                     target="#{medicalStaffViewScopedController.selectedMedecin}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+
+    </h:form>
+
+
+</ui:composition>

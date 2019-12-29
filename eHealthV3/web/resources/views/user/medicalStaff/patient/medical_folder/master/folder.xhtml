@@ -1,0 +1,28 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+
+
+    <ui:include src="/resources/views/user/medicalStaff/patient/medical_folder/sub/medicalFoldersList.xhtml"/>
+
+    <!--dossierMedicals generator -->
+
+
+    <!--update folder -->
+    <ui:include src="/resources/views/user/medicalStaff/patient/medical_folder/sub/updateForm.xhtml"/>
+
+    <!--update folder -->
+
+    <h:panelGroup id="no_patient_existAlert2"
+                  rendered="#{medicalFolderRequestScopedController.dossierMedicals.size() ==0}">
+        <div class="alert alert-warning">
+            #{msg['no_dossierMedicals_exist']}
+        </div>
+    </h:panelGroup>
+
+</ui:composition>

@@ -1,0 +1,131 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="updateCompteForm">
+
+        <p:growl id="growlUpdateTool" showDetail="true"/>
+
+        <p:dialog id="compteUpdatePanel" header="#{msg['update_medical_compte']}"
+                  widgetVar="medical_compte_updater_dialog"
+                  modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="false">
+            <p:panel style="text-align:center;"
+                     rendered="#{not empty patientViewScopedController.selectedPatient}">
+                <h:panelGrid columns="1">
+                <h:panelGrid>
+                    <h:panelGrid columns="2">
+
+                        <p:outputLabel for="lastname" value="#{msg['lastname']}"/>
+                        <p:inputText id="lastname" value="#{patientViewScopedController.selectedPatient.nom}"/>
+
+                        <p:outputLabel for="firstname" value="#{msg['firstname']}"/>
+                        <p:inputText id="firstname" value="#{patientViewScopedController.selectedPatient.prenom}"/>
+
+                        <p:outputLabel for="insurance_number" value="#{msg['insurance_number']} :"/>
+                        <p:inputText id="insurance_number"
+                                     value="#{patientViewScopedController.selectedPatient.numeroAssurance}"/>
+
+
+                        <p:outputLabel for="email" value="#{msg['email']} :"/>
+                        <p:inputText id="email" value="#{patientViewScopedController.selectedPatient.email}"/>
+
+                        <p:outputLabel for="date_birth" value="#{msg['date_birth']} :"/>
+                        <p:calendar id="date_birth" value="#{patientViewScopedController.selectedPatient.dateNaissance}"
+                                    showOn="button"/>
+
+
+                        <p:outputLabel for="birthplace" value="#{msg['birthplace']} :"/>
+                        <p:inputText id="birthplace"
+                                     value="#{patientViewScopedController.selectedPatient.lieuNaissance}"/>
+
+                        <p:outputLabel for="phone_number" value="#{msg['phone_number']} :"/>
+                        <p:inputNumber id="phone_number"
+                                       value="#{patientViewScopedController.selectedPatient.numeroTelephone}"/>
+
+                        <p:outputLabel for="sex" value="#{msg['sex']} :"/>
+                        <p:selectOneMenu id="sex" value="#{patientViewScopedController.selectedPatient.sexe}">
+                            <f:selectItem itemLabel="FEMME" itemValue="FEMME"/>
+                            <f:selectItem itemLabel="HOMME" itemValue="HOMME"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:separator/>
+                    <h:panelGrid columns="2">
+
+
+                        <p:outputLabel for="zip_code" value="#{msg['zip_code']} :"/>
+                        <p:inputText id="zip_code"
+                                     value="#{patientViewScopedController.selectedPatient.adresse.codePostal}"/>
+
+
+                        <p:outputLabel for="address_number" value="#{msg['address_number']} :"/>
+                        <p:inputNumber id="address_number"
+                                       value="#{patientViewScopedController.selectedPatient.adresse.numero}"/>
+
+                        <p:outputLabel for="street" value="#{msg['street']} :"/>
+                        <p:inputText id="street" value="#{patientViewScopedController.selectedPatient.adresse.rue}"/>
+
+                        <p:outputLabel for="city" value="#{msg['city']} :"/>
+                        <p:inputText id="city" value="#{patientViewScopedController.selectedPatient.adresse.ville}"/>
+
+
+                    </h:panelGrid>
+
+                </h:panelGrid>
+
+                <h:panelGrid>
+
+
+                    <h:panelGrid columns="2">
+                        <f:facet name="header">
+                            <p:outputLabel
+                                    style="font-size:30px ">#{msg['account_setting']}</p:outputLabel>                        </f:facet>
+                        <p:outputLabel for="login" value="#{msg['login']}"/>
+                        <p:inputText id="login" value="#{patientViewScopedController.selectedPatient.compte.login}"/>
+
+                        <p:outputLabel for="password" value="#{msg['password']}"/>
+                        <p:inputText id="password"
+                                     value="#{patientViewScopedController.selectedPatient.compte.motDePasse}"/>
+
+
+                        <p:outputLabel for="account_state" value="#{msg['account_state']} :"/>
+                        <p:selectOneMenu id="account_state"
+                                         value="#{patientViewScopedController.selectedPatient.compte.etatCompte}">
+                            <f:selectItem itemLabel="NONACTIF" itemValue="NONACTIF"/>
+                            <f:selectItem itemLabel="ACTIF" itemValue="ACTIF"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+
+
+                </h:panelGrid>
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    <h:panelGroup style="display:block; text-align:right">
+                        <p:commandButton
+                                icon="fa fa-refresh"
+                                update=":updateCompteForm:growlUpdateTool :patientListForm"
+                                actionListener="#{patientViewScopedController.update}"
+                        />
+
+                        <p:commandButton
+                                icon="ui-icon ui-icon-close"
+                                update=":updateCompteForm:growlUpdateTool :patientListForm"
+                                actionListener="#{patientViewScopedController.delete}"
+                        />
+                    </h:panelGroup>
+
+                </f:facet>
+
+            </p:panel>
+        </p:dialog>
+        <!--update compte file -->
+    </h:form>
+
+
+</ui:composition>

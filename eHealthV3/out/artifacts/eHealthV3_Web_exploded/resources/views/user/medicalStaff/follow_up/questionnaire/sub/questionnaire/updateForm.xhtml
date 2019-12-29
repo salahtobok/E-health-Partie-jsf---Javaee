@@ -1,0 +1,62 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="updateQuestionnaireForm">
+
+        <p:growl id="growlUpdateTool" showDetail="true"/>
+
+        <p:dialog  id="questionnaireUpdatePanel" header="#{msg['update_medical_compte']}" widgetVar="questionnaire_updater_dialog"
+                  modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="false">
+            <p:panel style="text-align:center;"
+                     rendered="#{not empty questionnaireMedicalStaffViewScopedController.selectedQuestionnaire}">
+
+                <h:panelGrid columns="2">
+
+                    <p:outputLabel for="duration" value="#{msg['duration']} :"/>
+                    <p:selectOneMenu id="duration" value="#{questionnaireMedicalStaffViewScopedController.selectedQuestionnaire.periode}" >
+                        <f:selectItem itemLabel="POST" itemValue="POST" />
+                        <f:selectItem itemLabel="PRES" itemValue="PRES" />
+                    </p:selectOneMenu>
+
+
+
+                        <p:outputLabel for="operation" value="#{msg['operation']}" />
+                        <p:selectOneMenu id="operation" value="#{questionnaireMedicalStaffViewScopedController.operationSelectedId}" lazy="true" style="width:125px">
+                            <f:selectItem itemLabel="#{msg['operation']}" itemValue="" noSelectionOption="true" />
+                            <f:selectItems value="#{questionnaireMedicalStaffViewScopedController.operations}" var="operation"
+                                           itemLabel="Type : #{operation.type} Période : #{operation.periode}  Date : #{operation.keyOperation.dateOperation}" itemValue="#{operation.idOperation}"/>
+                        </p:selectOneMenu>
+
+
+                </h:panelGrid>
+                <f:facet name="footer">
+                    <h:panelGroup style="display:block; text-align:right">
+                        <p:commandButton
+                                icon="fa fa-refresh"
+                                update=":updateQuestionnaireForm:growlUpdateTool :questionnaireListForm"
+                                actionListener="#{questionnaireMedicalStaffViewScopedController.update}"
+                        />
+
+                        <p:commandButton
+                                icon="ui-icon ui-icon-close"
+                                update=":updateQuestionnaireForm:growlUpdateTool :questionnaireListForm"
+                                actionListener="#{questionnaireMedicalStaffViewScopedController.delete}"
+                        />
+                    </h:panelGroup>
+
+                </f:facet>
+
+            </p:panel>
+        </p:dialog>
+        <!--update compte file -->
+    </h:form>
+
+
+</ui:composition>

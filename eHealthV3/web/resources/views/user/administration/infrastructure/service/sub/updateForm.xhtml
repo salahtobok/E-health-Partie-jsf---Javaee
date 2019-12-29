@@ -1,0 +1,50 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="updateServiceForm">
+
+        <p:growl id="growlUpdateTool" showDetail="true"/>
+
+        <p:dialog  id="serviceUpdatePanel" header="#{msg['update_medical_compte']}" widgetVar="service_updater_dialog"
+                  modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="false">
+            <p:panel style="text-align:center;"
+                     rendered="#{not empty serviceViewScopedController.selectedService}">
+                <h:panelGrid columns="2">
+
+                    <p:outputLabel for="lastname" value="#{msg['name']}"/>
+                    <p:inputText id="lastname" value="#{serviceViewScopedController.selectedService.nom}"/>
+
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    <h:panelGroup style="display:block; text-align:right">
+                        <p:commandButton
+                                icon="fa fa-refresh"
+                                update=":updateServiceForm:growlUpdateTool :serviceListForm"
+                                actionListener="#{serviceViewScopedController.update}"
+                        />
+                        <p:commandButton
+                                icon="ui-icon ui-icon-close"
+                                update=":updateServiceForm:growlUpdateTool :serviceListForm "
+                                actionListener="#{serviceViewScopedController.delete}"
+                        />
+
+                    </h:panelGroup>
+
+
+                </f:facet>
+
+            </p:panel>
+        </p:dialog>
+        <!--update compte file -->
+    </h:form>
+
+
+</ui:composition>

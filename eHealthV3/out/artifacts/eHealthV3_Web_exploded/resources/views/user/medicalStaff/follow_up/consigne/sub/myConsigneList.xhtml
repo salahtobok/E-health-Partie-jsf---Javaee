@@ -1,0 +1,62 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+    <h:form id="consigneListForm">
+
+
+        <h:panelGroup id="consigneList">
+
+
+            <p:dataTable var="consigne" value="#{consigneMedicalStaffRequestScopedController.myConsignes}"
+                         widgetVar="consignesTable"
+                         emptyMessage="#{msg['no_consign_exist']}"
+                         filteredValue="#{consigneMedicalStaffRequestScopedController.filteredmyConsignes}"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+
+                <p:column width="90%" filterBy="#{consigne.contenu}" headerText="#{msg['content']}"
+                          filterMatchMode="contains">
+                    <h:outputText value="#{consigne.contenu}"/>
+                </p:column>
+
+
+                <p:column width="7%" filterBy="#{consigne.periode}" headerText="#{msg['duration']}" filterMatchMode="exact">
+                    <f:facet name="filter">
+                        <p:selectOneMenu onchange="PF('consignesTable').filter()" >
+                            <f:selectItem itemLabel="PRES" itemValue="PRES"/>
+                            <f:selectItem itemLabel="POST" itemValue="POST"/>
+                        </p:selectOneMenu>
+                    </f:facet>
+                    <h:outputText value="#{consigne.periode}"/>
+                </p:column>
+
+
+
+                <p:column width="3%" >
+                    <p:commandButton update=":updateConsigneForm:consigneUpdatePanel"
+                                     style="font-size: x-small" icon="fa fa-refresh"
+                                     title="#{msg['update_medical_compte']}"
+                                     oncomplete="PF('consigne_updater_dialog').show();">
+                        <f:setPropertyActionListener value="#{consigne}"
+                                                     target="#{consigneMedicalStaffViewScopedController.selectedConsigne}"/>
+                    </p:commandButton>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:panelGroup>
+
+
+    </h:form>
+
+
+</ui:composition>

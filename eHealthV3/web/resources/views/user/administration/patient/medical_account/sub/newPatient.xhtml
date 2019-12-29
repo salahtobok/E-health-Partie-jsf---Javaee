@@ -1,0 +1,82 @@
+<ui:composition
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+    <h:form id="createForm">
+        <p:growl id="growlCreateTool" showDetail="true"/>
+
+        <p:dialog  header="#{msg['create_medical_compte']}" widgetVar="medical_compte_creator_dialog" modal="true"
+                  showEffect="fade" hideEffect="fade" resizable="false">
+
+                <p:panel id="comptePatientDialog"  style="text-align:center;">
+                    <h:panelGrid columns="2">
+                        <p:outputLabel for="lastname" value="#{msg['lastname']}"/>
+                        <p:inputText id="lastname" value="#{patientViewScopedController.newPatient.nom}"/>
+
+                        <p:outputLabel for="firstname" value="#{msg['firstname']}"/>
+                        <p:inputText id="firstname" value="#{patientViewScopedController.newPatient.prenom}"/>
+
+                        <p:outputLabel for="insurance_number" value="#{msg['insurance_number']} :"/>
+                        <p:inputText id="insurance_number" value="#{patientViewScopedController.newPatient.numeroAssurance}"/>
+
+
+                        <p:outputLabel for="email" value="#{msg['email']} :"/>
+                        <p:inputText id="email" value="#{patientViewScopedController.newPatient.email}"/>
+
+                        <p:outputLabel for="date_birth" value="#{msg['date_birth']} :"/>
+                        <p:calendar id="date_birth" value="#{patientViewScopedController.newPatient.dateNaissance}" showOn="button"  />
+
+                        <p:outputLabel for="birthplace" value="#{msg['birthplace']} :"/>
+                        <p:inputText id="birthplace" value="#{patientViewScopedController.newPatient.lieuNaissance}"/>
+
+                        <p:outputLabel for="phone_number" value="#{msg['phone_number']} :"/>
+                        <p:inputNumber id="phone_number" value="#{patientViewScopedController.newPatient.numeroTelephone}"/>
+
+                        <p:outputLabel for="sex" value="#{msg['sex']} :"/>
+                        <p:selectOneMenu id="sex" value="#{patientViewScopedController.newPatient.sexe}" >
+                            <f:selectItem itemLabel="FEMME" itemValue="FEMME" />
+                            <f:selectItem itemLabel="HOMME" itemValue="HOMME" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <p:separator/>
+                    <h:panelGrid columns="2">
+
+
+                        <p:outputLabel for="zip_code" value="#{msg['zip_code']} :"/>
+                        <p:inputText id="zip_code" value="#{patientViewScopedController.newPatient.adresse.codePostal}"/>
+
+
+                        <p:outputLabel for="address_number" value="#{msg['address_number']} :"/>
+                        <p:inputNumber id="address_number" value="#{patientViewScopedController.newPatient.adresse.numero}"/>
+
+                        <p:outputLabel for="street" value="#{msg['street']} :"/>
+                        <p:inputText id="street" value="#{patientViewScopedController.newPatient.adresse.rue}"/>
+
+                        <p:outputLabel for="city" value="#{msg['city']} :"/>
+                        <p:inputText id="city" value="#{patientViewScopedController.newPatient.adresse.ville}"/>
+
+
+                    </h:panelGrid>
+
+                    <f:facet name="footer">
+                        <h:panelGroup style="display:block; text-align:right">
+                            <p:commandButton
+                                    icon="fa fa-check"
+                                    update="growlCreateTool :patientListForm:patientList"
+                                    actionListener="#{patientViewScopedController.create}"
+                            />
+                        </h:panelGroup>
+
+                    </f:facet>
+
+                </p:panel>
+
+        </p:dialog>
+
+
+    </h:form>
+</ui:composition>

@@ -1,0 +1,104 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:p="http://primefaces.org/ui"
+>
+
+
+<!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <h:form>
+                <p:commandLink styleClass="navbar-brand" update=":include" value="#{msg['app_name']}"
+                               action="#{medicalStaffLayoutController.setPage('/resources/views/user/medicalStaff/landing')}"/>
+            </h:form>
+        </div>
+        <!-- /.navbar-header -->
+
+        <h:form>
+        <ul class="nav navbar-top-links navbar-right">
+
+            <li>
+                <p:commandLink update=":include" value="#{msg['profile']}"
+                               action="#{medicalStaffLayoutController.setPage('/resources/views/user/medicalStaff/profile/setting')}"/>
+            </li>
+            <li>
+                <p:commandLink value="#{msg['logout']}"
+                               action="#{userController.logout}"/>
+
+            </li>
+        </ul>
+        </h:form>
+        <!-- /.navbar-top-links -->
+        <!--<f:ajax render=":currentFragment">-->
+
+
+        <h:form>
+            <!--<f:ajax render=":include">-->
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-wheelchair fa-fw"></i>#{msg['patient']}<span
+                                    class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <p:commandLink update=":include" value="#{msg['medical_folder']}"
+                                                   action="#{medicalStaffLayoutController.setPage('/resources/views/user/medicalStaff/patient/medical_folder/medical_folder')}"/>
+                                </li>
+                                <li>
+                                    <p:commandLink update=":include" value="#{msg['medical_account']}"
+                                                   action="#{medicalStaffLayoutController.setPage('/resources/views/user/medicalStaff/patient/medical_account/medical_account')}"/>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-pencil fa-fw"></i>#{msg['follow_up']}<span
+                                    class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <p:commandLink update=":include" value="#{msg['survey']}"
+                                                   action="#{medicalStaffLayoutController.setPage('/resources/views/user/medicalStaff/follow_up/questionnaire/questionnaire')}"/>
+
+                                </li>
+                                <li>
+                                    <p:commandLink update=":include" value="#{msg['order']}"
+                                                   action="#{medicalStaffLayoutController.setPage('/resources/views/user/medicalStaff/follow_up/consigne/consigne')}"/>
+                                </li>
+
+                                <li>
+                                    <p:commandLink update=":include" value="#{msg['process']}"
+                                                   action="#{medicalStaffLayoutController.setPage('/resources/views/user/medicalStaff/follow_up/operation/operation')}"/>
+                                </li>
+                                <li>
+                                    <p:commandLink update=":include" value="#{msg['report']}"
+                                                   action="#{medicalStaffLayoutController.setPage('/resources/views/user/medicalStaff/follow_up/report/report')}"/>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!--</f:ajax>-->
+        </h:form>
+
+
+        <!--</f:ajax>-->
+        <!-- /.navbar-static-side -->
+    </nav>
+
+</ui:composition>
